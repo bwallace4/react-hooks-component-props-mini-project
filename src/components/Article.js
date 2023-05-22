@@ -1,10 +1,13 @@
-import React from "react";
-
-function makeEmojiList(minutes) {
-  const interval = minutes < 30 ? 5 : 10;
-  const emoji = minutes < 30 ? "☕️" : "🍱";
-
+function emojiFromMinutes(minutes) {
+  let interval = 5;
+  let emoji = "☕️";
   let emojis = "";
+
+  if (minutes >= 30) {
+    interval = 10;
+    emoji = "🍱";
+  }
+
   for (let i = 0; i < minutes; i += interval) {
     emojis += emoji;
   }
@@ -12,14 +15,12 @@ function makeEmojiList(minutes) {
   return emojis;
 }
 
-function Article({ title, date = "January 1, 1970", preview, minutes }) {
-  const emojis = makeEmojiList(minutes);
-
+function Article({ minutes, title, date = "January 1, 1970", preview }) {
   return (
     <article>
       <h3>{title}</h3>
       <small>
-        {date} • {emojis} {minutes} min read
+        {date} | {emojiFromMinutes(minutes)} {minutes} min read
       </small>
       <p>{preview}</p>
     </article>
